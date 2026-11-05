@@ -14,11 +14,13 @@
   body{display:flex;align-items:center}.card{width:100%}
   .card{padding:6px 4px 6px 14px;border-left:3px solid var(--accent);cursor:pointer;user-select:none}
   .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:4px}
-  .q{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--ink);font-size:15px;line-height:1.38;
+  .q{font-family:Fraunces,Georgia,'Noto Serif SC','Songti SC',serif;font-weight:600;color:var(--ink);font-size:15px;line-height:1.38;
      opacity:0;transition:opacity .5s ease}
   .a{margin-top:5px;font-size:11.5px;line-height:1.4;color:var(--muted);opacity:0;transition:opacity .6s ease .15s}
   .a b{color:var(--ink);font-weight:600}
-  .show .q,.show .a{opacity:1}
+  .tr{margin-top:3px;font-size:12.5px;line-height:1.4;font-style:italic;color:var(--ink);opacity:0;transition:opacity .6s ease .1s}
+  .show .q,.show .a,.show .tr{opacity:1}
+  @media (max-width:380px){.q{font-size:14px}.tr{font-size:11.5px}.a{font-size:11px}}
   @media (min-width:600px){.q{font-size:16.5px}}
 </style>
 </head>
@@ -26,6 +28,7 @@
 <div class="card" id="card" role="button" tabindex="0" aria-label="Show another tip" title="Tap for another tip">
   <div class="tag" id="tag">Pro tip</div>
   <div class="q" id="q"></div>
+  <div class="tr" id="tr"></div>
   <div class="a" id="a"></div>
 </div>
 <script>
@@ -65,7 +68,14 @@ const Q = [
  ["Customers","“Don't find customers for your products, find products for your customers.”","Seth Godin","Marketing author · Purple Cow, This Is Marketing"],
  ["Complaints","“Your most unhappy customers are your greatest source of learning.” Welcome complaints — fix them fast and you earn loyalty.","Bill Gates","Co-founder of Microsoft"],
  ["Quality","“Quality in a product or service is not what you put in. It is what the customer gets out of it.”","Peter Drucker","Father of modern management"],
- ["Courage","“You miss 100% of the shots you don't take.” Ask for the test drive. Ask for the order. Ask for the referral.","Wayne Gretzky","NHL all-time leading scorer"]
+ ["Courage","“You miss 100% of the shots you don't take.” Ask for the test drive. Ask for the order. Ask for the referral.","Wayne Gretzky","NHL all-time leading scorer"],
+ // BYD voices — Chinese originals with English translation (5th field)
+ ["BYD · 比亚迪","工程师之魂就是比亚迪之魂。即便我们所有财产，包括厂房、专利、股票全部消失，只要工程师还在，就随时可以东山再起。","王传福 Wang Chuanfu","BYD founder · 10-millionth NEV, Nov 2024","“The soul of our engineers is the soul of BYD. Even if all our assets — factories, patents, shares — vanished, as long as our engineers remain, we can rise again at any time.”"],
+ ["BYD · 比亚迪","在比亚迪，技术为王，创新为本，核心就是研发人员。","王传福 Wang Chuanfu","BYD founder · shareholders' meeting, 2024","“At BYD, technology is king and innovation is the foundation — and at the core are our R&D people.”"],
+ ["BYD · 比亚迪","过度营销和巨大流量只能带来一时的效应，真正创造高端品牌还是靠产品力，产品力的核心要靠技术创新。","王传福 Wang Chuanfu","BYD founder · shareholders' meeting, 2024","“Hype and huge traffic only bring a short-lived effect. A true premium brand is built on product strength — and product strength comes from technological innovation.”"],
+ ["BYD · 比亚迪","为地球降温1℃","BYD's corporate vision","The goal behind every BYD new energy vehicle","“Cool the Earth by 1°C.”"],
+ ["BYD · 比亚迪","用技术创新，满足人们对美好生活的向往。","BYD's corporate mission","As stated by BYD","“Use technological innovation to meet people's longing for a better life.”"],
+ ["BYD","“This guy is a combination of Thomas Edison and Jack Welch — something like Edison in solving technical problems, and something like Welch in getting done what he needs to do. I have never seen anything like it.”","Charlie Munger","Vice Chairman of Berkshire Hathaway, on BYD founder Wang Chuanfu · Fortune, 2009"]
 ];
 (function(){
   const p = new URLSearchParams(location.search);
@@ -82,10 +92,10 @@ const Q = [
   }
   const card=document.getElementById("card");
   function show(){
-    const [t,q,a,c]=next();
+    const [t,q,a,c,tr]=next();
     card.classList.remove("show");
     setTimeout(()=>{
-      document.getElementById("q").textContent=q;
+      document.getElementById("q").textContent=q;const te=document.getElementById("tr");te.textContent=tr||"";te.style.display=tr?"block":"none";
       const el=document.getElementById("a");el.textContent="";const nb=document.createElement("b");nb.textContent=a;el.append(nb," · "+c);
       document.getElementById("tag").textContent="Pro tip · "+t;
       card.classList.add("show");
