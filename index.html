@@ -97,7 +97,7 @@ const Q = [
     setTimeout(()=>{
       document.getElementById("q").textContent=q;const te=document.getElementById("tr");te.textContent=tr||"";te.style.display=tr?"block":"none";
       const el=document.getElementById("a");el.textContent="";const nb=document.createElement("b");nb.textContent=a;el.append(nb," · "+c);
-      document.getElementById("tag").textContent="Pro tip · "+t;
+      document.getElementById("tag").textContent=t.startsWith("BYD")?t:"Pro tip · "+t;
       card.classList.add("show");
     },card.dataset.ready?200:0);
     card.dataset.ready=1;
