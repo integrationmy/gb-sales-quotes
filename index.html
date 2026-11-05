@@ -16,9 +16,11 @@
     border-left:6px solid var(--accent);cursor:pointer;user-select:none;position:relative;overflow:hidden}
   .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
   .q{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--ink);
-     font-size:clamp(17px,4.6vw,24px);line-height:1.3;opacity:0;transform:translateY(6px);
+     font-size:clamp(15px,3.9vw,20px);line-height:1.32;opacity:0;transform:translateY(6px);
      transition:opacity .5s ease,transform .5s ease}
-  .a{margin-top:8px;font-size:13px;color:var(--muted);font-weight:500;opacity:0;transition:opacity .6s ease .15s}
+  .a{margin-top:8px;font-size:13px;font-weight:600;color:var(--muted);font-weight:500;opacity:0;transition:opacity .6s ease .15s}
+  .c{margin-top:2px;font-size:11.5px;color:var(--muted);opacity:0;transition:opacity .6s ease .2s;padding-right:90px}
+  .show .c{opacity:.85}
   .show .q{opacity:1;transform:none}.show .a{opacity:1}
   .hint{position:absolute;right:14px;bottom:10px;font-size:11px;color:var(--muted);opacity:.7}
   .mark{position:absolute;right:10px;top:-18px;font-family:Fraunces,Georgia,serif;font-size:110px;color:var(--accent);opacity:.08;line-height:1}
@@ -27,57 +29,50 @@
 <body>
 <div class="card" id="card" role="button" tabindex="0" aria-label="Show another quote">
   <div class="mark" aria-hidden="true">&ldquo;</div>
-  <div class="tag" id="tag">Today's fuel</div>
+  <div class="tag" id="tag">Pro tip</div>
   <div class="q" id="q"></div>
   <div class="a" id="a"></div>
+  <div class="c" id="c"></div>
   <div class="hint">Tap for another</div>
 </div>
 <script>
 const Q = [
- // Grit & action
- ["You miss 100% of the shots you don't take.","Wayne Gretzky","Courage"],
- ["Hard work beats talent when talent doesn't work hard.","Tim Notke","Grit"],
- ["Either you run the day or the day runs you.","Jim Rohn","Discipline"],
- ["Success is nothing more than a few simple disciplines, practised every day.","Jim Rohn","Discipline"],
- ["Motivation is what gets you started. Habit is what keeps you going.","Jim Ryun","Discipline"],
- ["Whether you think you can, or you think you can't — you're right.","Henry Ford","Mindset"],
- ["Pressure is a privilege.","Billie Jean King","Pressure"],
- ["There are no traffic jams along the extra mile.","Roger Staubach","Service"],
- ["Act as if what you do makes a difference. It does.","William James","Purpose"],
- ["Opportunities don't happen. You create them.","Chris Grosser","Hustle"],
- // Customer & selling
- ["Every sale has five basic obstacles: no need, no money, no hurry, no desire, no trust.","Zig Ziglar","The craft"],
- ["Approach each customer with the idea of helping them solve a problem or achieve a goal — not of selling a product.","Brian Tracy","The craft"],
- ["People don't buy what you do; they buy why you do it.","Simon Sinek","The craft"],
- ["Make a customer, not a sale.","Katherine Barchetti","Customers"],
- ["If you're not taking care of your customer, your competitor will.","Bob Hooey","Customers"],
- ["Your most unhappy customers are your greatest source of learning.","Bill Gates","Customers"],
- ["Quality is not what you put into it. It is what the customer gets out of it.","Peter Drucker","Customers"],
- ["Ninety percent of selling is conviction and ten percent is persuasion.","Shiv Khera","Conviction"],
- // More verified quotes
- ["Seek first to understand, then to be understood.","Stephen R. Covey","The craft"],
- ["Begin with the end in mind.","Stephen R. Covey","Discipline"],
- ["I am not a product of my circumstances. I am a product of my decisions.","Stephen R. Covey","Mindset"],
- ["You can have everything in life you want, if you will just help enough other people get what they want.","Zig Ziglar","Customers"],
- ["Timid salesmen have skinny kids.","Zig Ziglar","Courage"],
- ["Well done is better than well said.","Benjamin Franklin","Action"],
- ["Fall seven times, stand up eight.","Japanese proverb","Resilience"],
- ["The best time to plant a tree was 20 years ago. The second best time is now.","Chinese proverb","Action"],
- ["We are what we repeatedly do. Excellence, then, is not an act, but a habit.","Will Durant","Discipline"],
- ["Failure is simply the opportunity to begin again, this time more intelligently.","Henry Ford","Resilience"],
- ["Price is what you pay. Value is what you get.","Warren Buffett","Value"],
- ["It takes 20 years to build a reputation and five minutes to ruin it.","Warren Buffett","Trust"],
- ["Don't watch the clock; do what it does. Keep going.","Sam Levenson","Grit"],
- ["The only place where success comes before work is in the dictionary.","Vidal Sassoon","Grit"],
- ["Don't find customers for your products, find products for your customers.","Seth Godin","Customers"],
- ["People do not buy goods and services. They buy relations, stories and magic.","Seth Godin","The craft"],
- ["I've failed over and over and over again in my life. And that is why I succeed.","Michael Jordan","Resilience"],
- ["Talent wins games, but teamwork and intelligence win championships.","Michael Jordan","Teamwork"],
- ["Champions keep playing until they get it right.","Billie Jean King","Grit"],
- ["The difference between ordinary and extraordinary is that little extra.","Jimmy Johnson","Service"],
- ["There is only one boss. The customer.","Sam Walton","Customers"],
- ["Do what you do so well that they will want to see it again and bring their friends.","Walt Disney","Referrals"],
- ["Your time is limited, so don't waste it living someone else's life.","Steve Jobs","Purpose"]
+ // [tag, advice, author, credentials]  — quote marks only on verbatim quotes
+ ["Referrals","Treat every customer as 250 people: each one influences roughly 250 others at weddings, funerals and coffee shops. Win one, win many — lose one, lose many.","Joe Girard","Guinness-record car salesman · 13,001 Chevrolets sold retail at a Detroit dealership"],
+ ["Follow-up","Stay in touch after the sale. Girard sent every customer a card every month for years — his repeat and referral business grew until buyers queued to see him.","Joe Girard","Guinness-record car salesman · 13,001 Chevrolets sold retail at a Detroit dealership"],
+ ["Prospecting","Hand out your business card everywhere you go. Every person you meet is a possible buyer or a possible referral.","Joe Girard","Guinness-record car salesman · 13,001 Chevrolets sold retail at a Detroit dealership"],
+ ["Speed to lead","Call new leads within the hour. Firms that responded within an hour were nearly 7× more likely to qualify the lead than those that waited even one hour longer.","Harvard Business Review","“The Short Life of Online Sales Leads” · study of 2,241 US companies"],
+ ["Discovery","Ask Situation, Problem, Implication and Need-payoff questions. Top performers in big-ticket sales ask more questions and talk about the customer's problem before the product.","Neil Rackham","Author of SPIN Selling · research on 35,000 sales calls"],
+ ["Closing","Pushy closing techniques work on small purchases but backfire on big ones. In major sales, earn the yes by uncovering needs — not by pressure.","Neil Rackham","Author of SPIN Selling · research on 35,000 sales calls"],
+ ["Insight","Teach, tailor, take control. The highest performers bring the customer a new insight about their own situation — not just product facts.","Matthew Dixon & Brent Adamson","The Challenger Sale · study of 6,000+ sales reps"],
+ ["Objections","Every sale has five basic obstacles: no need, no money, no hurry, no desire, no trust. Find out which one you're facing before you answer.","Zig Ziglar","Sales trainer · author of Secrets of Closing the Sale"],
+ ["Mindset","“You can have everything in life you want, if you will just help enough other people get what they want.”","Zig Ziglar","Sales trainer · author of Secrets of Closing the Sale"],
+ ["Rapport","“A person's name is to that person the sweetest and most important sound in any language.” Use it — and remember it.","Dale Carnegie","Author of How to Win Friends and Influence People · 30M+ copies sold"],
+ ["Rapport","“You can make more friends in two months by becoming interested in other people than you can in two years by trying to get other people interested in you.”","Dale Carnegie","Author of How to Win Friends and Influence People · 30M+ copies sold"],
+ ["Listening","“Seek first to understand, then to be understood.” Diagnose before you prescribe — let the customer finish before you pitch.","Stephen R. Covey","Author of The 7 Habits of Highly Effective People"],
+ ["Reciprocity","Give first. People feel obliged to return a favour — a cold drink, a useful charging guide or a genuine tip creates goodwill before you ask for anything.","Robert Cialdini","Author of Influence · Professor Emeritus, Arizona State University"],
+ ["Social proof","People follow people like them. Tell buyers how many local families, colleagues or professionals already drive the model they're considering.","Robert Cialdini","Author of Influence · Professor Emeritus, Arizona State University"],
+ ["Commitment","Small yeses lead to big yeses. A booked test drive or a written wish-list makes people far more likely to follow through.","Robert Cialdini","Author of Influence · Professor Emeritus, Arizona State University"],
+ ["Scarcity","Opportunities seem more valuable when they're less available. Be honest about limited stock, colours or campaign deadlines — never invent them.","Robert Cialdini","Author of Influence · Professor Emeritus, Arizona State University"],
+ ["Negotiation","Use tactical empathy. Label the customer's feelings — “It sounds like you're worried about resale value” — and watch the tension drop.","Chris Voss","Former FBI lead international kidnapping negotiator · author of Never Split the Difference"],
+ ["Negotiation","Mirror: repeat the last one to three words the customer said, with a curious tone. They'll keep talking and tell you what really matters.","Chris Voss","Former FBI lead international kidnapping negotiator · author of Never Split the Difference"],
+ ["Negotiation","Don't fear “no”. A “no” makes people feel safe and in control — and it starts the real conversation.","Chris Voss","Former FBI lead international kidnapping negotiator · author of Never Split the Difference"],
+ ["Handover","People judge an experience by its peak and its end. Make the delivery moment unforgettable — it's what they'll retell.","Daniel Kahneman","Nobel laureate in Economics · author of Thinking, Fast and Slow"],
+ ["Framing","Losses loom larger than gains. Show what staying with the old car costs every month, not just what the new one saves.","Daniel Kahneman","Nobel laureate in Economics · author of Thinking, Fast and Slow"],
+ ["Anchoring","The first number sets the frame. Present the well-equipped variant first, then step down if needed.","Daniel Kahneman","Nobel laureate in Economics · author of Thinking, Fast and Slow"],
+ ["Resilience","Optimistic salespeople sold 37% more than pessimistic ones in their first two years. Treat a rejection as temporary, specific and not about you.","Martin Seligman","Founder of positive psychology · MetLife sales study, Learned Optimism"],
+ ["Resilience","Stay buoyant: before a call, ask yourself “Can I do this?” rather than pumping yourself up — then explain each rejection as temporary and specific.","Daniel H. Pink","Author of To Sell Is Human"],
+ ["Buying","“People don't like to be sold — but they love to buy.” Create the atmosphere for buying instead of pushing a sale.","Jeffrey Gitomer","Sales trainer · author of The Little Red Book of Selling"],
+ ["Know them","Know your customer better than the competitor does: family, job, hobbies, birthdays. Harvey Mackay's 66-question customer profile turned this into a system.","Harvey Mackay","Author of Swim with the Sharks Without Being Eaten Alive"],
+ ["Approach","Approach each customer with the idea of helping them solve a problem or reach a goal — not of selling a product.","Brian Tracy","Sales trainer · author of The Psychology of Selling"],
+ ["Why","“People don't buy what you do; they buy why you do it.” Lead with the reason it matters to their life.","Simon Sinek","Author of Start With Why"],
+ ["Service","“There is only one boss. The customer.” They can fire everybody simply by spending their money elsewhere.","Sam Walton","Founder of Walmart"],
+ ["Trust","“It takes 20 years to build a reputation and five minutes to ruin it.” Keep every small promise — the callback, the quote, the delivery date.","Warren Buffett","Chairman of Berkshire Hathaway"],
+ ["Value","“Price is what you pay. Value is what you get.” Sell the value, not the discount.","Warren Buffett","Chairman of Berkshire Hathaway"],
+ ["Customers","“Don't find customers for your products, find products for your customers.”","Seth Godin","Marketing author · Purple Cow, This Is Marketing"],
+ ["Complaints","“Your most unhappy customers are your greatest source of learning.” Welcome complaints — fix them fast and you earn loyalty.","Bill Gates","Co-founder of Microsoft"],
+ ["Quality","“Quality in a product or service is not what you put in. It is what the customer gets out of it.”","Peter Drucker","Father of modern management"],
+ ["Courage","“You miss 100% of the shots you don't take.” Ask for the test drive. Ask for the order. Ask for the referral.","Wayne Gretzky","NHL all-time leading scorer"]
 ];
 (function(){
   const p = new URLSearchParams(location.search);
@@ -94,12 +89,12 @@ const Q = [
   }
   const card=document.getElementById("card");
   function show(){
-    const [q,a,t]=next();
+    const [t,q,a,c]=next();
     card.classList.remove("show");
     setTimeout(()=>{
-      document.getElementById("q").textContent="“"+q+"”";
-      document.getElementById("a").textContent="— "+a;
-      document.getElementById("tag").textContent="Today's fuel · "+t;
+      document.getElementById("q").textContent=q;
+      document.getElementById("a").textContent="— "+a;document.getElementById("c").textContent=c;
+      document.getElementById("tag").textContent="Pro tip · "+t;
       card.classList.add("show");
     },card.dataset.ready?250:0);
     card.dataset.ready=1;
