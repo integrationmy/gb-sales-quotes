@@ -33,7 +33,6 @@
   <div class="hint">Tap for another</div>
 </div>
 <script>
-const GB = "Goh Brothers Cars";
 const Q = [
  // Grit & action
  ["You miss 100% of the shots you don't take.","Wayne Gretzky","Courage"],
@@ -55,35 +54,30 @@ const Q = [
  ["Your most unhappy customers are your greatest source of learning.","Bill Gates","Customers"],
  ["Quality is not what you put into it. It is what the customer gets out of it.","Peter Drucker","Customers"],
  ["Ninety percent of selling is conviction and ten percent is persuasion.","Shiv Khera","Conviction"],
- // Original — the showroom floor
- ["The customer who walked out today is still deciding. Be the name they remember tonight.",GB,"Follow-up"],
- ["Every 'no' is a customer telling you what to fix. Listen harder, not louder.",GB,"Rejection"],
- ["Somewhere in Perak, a family is about to buy their first EV. Make sure it's from you.",GB,"Purpose"],
- ["You're not selling a car. You're handing someone the keys to the next chapter of their life.",GB,"Purpose"],
- ["Fortune is in the follow-up. The fifth call closes what the first call opened.",GB,"Follow-up"],
- ["Nobody remembers the spec sheet. They remember how you made them feel on the test drive.",GB,"Test drive"],
- ["Your pipeline today is your pay cheque next month. Feed it.",GB,"Pipeline"],
- ["Champions don't wait for walk-ins. They make the call before the coffee gets cold.",GB,"Hustle"],
- ["One more call. One more follow-up. One more smile. That's the whole secret.",GB,"Grit"],
- ["A slow month is just a story you haven't finished writing yet.",GB,"Resilience"],
- ["Trust is built in the small promises you keep — the callback, the quote on time, the honest answer.",GB,"Trust"],
- ["The best closers ask the best questions. Talk less, discover more.",GB,"The craft"],
- ["Handle the objection with curiosity, not defence. 'Tell me more' opens doors.",GB,"Objections"],
- ["Every happy owner is a billboard on the North–South Highway. Deliver like it.",GB,"Delivery"],
- ["The handover is the beginning, not the end. Ambassadors are made after the sale.",GB,"Referrals"],
- ["Your family is the reason. Today's effort is the proof.",GB,"Purpose"],
- ["Rejection isn't personal. Quitting is.",GB,"Resilience"],
- ["Someone who said 'just looking' last week is ready this week. Did you call?",GB,"Follow-up"],
- ["Know the product cold, so you can give the customer your full warmth.",GB,"Product"],
- ["Top performers aren't luckier. They just log every lead and chase every one.",GB,"Discipline"],
- ["Win the morning, own the month.",GB,"Discipline"],
- ["The customer can find the price online. They come to you for confidence.",GB,"Value"],
- ["Don't sell the discount. Sell the difference.",GB,"Value"],
- ["Be the consultant you'd want if your own mother were buying.",GB,"Trust"],
- ["Energy is contagious. Walk onto the floor like the best is about to happen — because it is.",GB,"Energy"],
- ["The target isn't pressure. It's proof of how many people you'll help this month.",GB,"Targets"],
- ["Small wins, stacked daily, become the month nobody else saw coming.",GB,"Momentum"],
- ["Every top seller was once a beginner who refused to stop.",GB,"Grit"]
+ // More verified quotes
+ ["Seek first to understand, then to be understood.","Stephen R. Covey","The craft"],
+ ["Begin with the end in mind.","Stephen R. Covey","Discipline"],
+ ["I am not a product of my circumstances. I am a product of my decisions.","Stephen R. Covey","Mindset"],
+ ["You can have everything in life you want, if you will just help enough other people get what they want.","Zig Ziglar","Customers"],
+ ["Timid salesmen have skinny kids.","Zig Ziglar","Courage"],
+ ["Well done is better than well said.","Benjamin Franklin","Action"],
+ ["Fall seven times, stand up eight.","Japanese proverb","Resilience"],
+ ["The best time to plant a tree was 20 years ago. The second best time is now.","Chinese proverb","Action"],
+ ["We are what we repeatedly do. Excellence, then, is not an act, but a habit.","Will Durant","Discipline"],
+ ["Failure is simply the opportunity to begin again, this time more intelligently.","Henry Ford","Resilience"],
+ ["Price is what you pay. Value is what you get.","Warren Buffett","Value"],
+ ["It takes 20 years to build a reputation and five minutes to ruin it.","Warren Buffett","Trust"],
+ ["Don't watch the clock; do what it does. Keep going.","Sam Levenson","Grit"],
+ ["The only place where success comes before work is in the dictionary.","Vidal Sassoon","Grit"],
+ ["Don't find customers for your products, find products for your customers.","Seth Godin","Customers"],
+ ["People do not buy goods and services. They buy relations, stories and magic.","Seth Godin","The craft"],
+ ["I've failed over and over and over again in my life. And that is why I succeed.","Michael Jordan","Resilience"],
+ ["Talent wins games, but teamwork and intelligence win championships.","Michael Jordan","Teamwork"],
+ ["Champions keep playing until they get it right.","Billie Jean King","Grit"],
+ ["The difference between ordinary and extraordinary is that little extra.","Jimmy Johnson","Service"],
+ ["There is only one boss. The customer.","Sam Walton","Customers"],
+ ["Do what you do so well that they will want to see it again and bring their friends.","Walt Disney","Referrals"],
+ ["Your time is limited, so don't waste it living someone else's life.","Steve Jobs","Purpose"]
 ];
 (function(){
   const p = new URLSearchParams(location.search);
