@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Fuel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--accent:#436FA3;--ink:#1f2f45;--soft:#f7f3ea;--muted:#6b7a8f;}
+  body.ipoh{--accent:#7d1f2e;--ink:#3a1219;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:transparent;font-family:Inter,system-ui,sans-serif}
+  .card{height:100%;min-height:150px;display:flex;flex-direction:column;justify-content:center;
+    padding:18px 22px 16px;border-radius:14px;background:var(--soft);
+    border-left:6px solid var(--accent);cursor:pointer;user-select:none;position:relative;overflow:hidden}
+  .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+  .q{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--ink);
+     font-size:clamp(17px,4.6vw,24px);line-height:1.3;opacity:0;transform:translateY(6px);
+     transition:opacity .5s ease,transform .5s ease}
+  .a{margin-top:8px;font-size:13px;color:var(--muted);font-weight:500;opacity:0;transition:opacity .6s ease .15s}
+  .show .q{opacity:1;transform:none}.show .a{opacity:1}
+  .hint{position:absolute;right:14px;bottom:10px;font-size:11px;color:var(--muted);opacity:.7}
+  .mark{position:absolute;right:10px;top:-18px;font-family:Fraunces,Georgia,serif;font-size:110px;color:var(--accent);opacity:.08;line-height:1}
+</style>
+</head>
+<body>
+<div class="card" id="card" role="button" tabindex="0" aria-label="Show another quote">
+  <div class="mark" aria-hidden="true">&ldquo;</div>
+  <div class="tag" id="tag">Today's fuel</div>
+  <div class="q" id="q"></div>
+  <div class="a" id="a"></div>
+  <div class="hint">Tap for another</div>
+</div>
+<script>
+const GB = "Goh Brothers Cars";
+const Q = [
+ // Grit & action
+ ["You miss 100% of the shots you don't take.","Wayne Gretzky","Courage"],
+ ["Hard work beats talent when talent doesn't work hard.","Tim Notke","Grit"],
+ ["Either you run the day or the day runs you.","Jim Rohn","Discipline"],
+ ["Success is nothing more than a few simple disciplines, practised every day.","Jim Rohn","Discipline"],
+ ["Motivation is what gets you started. Habit is what keeps you going.","Jim Ryun","Discipline"],
+ ["Whether you think you can, or you think you can't — you're right.","Henry Ford","Mindset"],
+ ["Pressure is a privilege.","Billie Jean King","Pressure"],
+ ["There are no traffic jams along the extra mile.","Roger Staubach","Service"],
+ ["Act as if what you do makes a difference. It does.","William James","Purpose"],
+ ["Opportunities don't happen. You create them.","Chris Grosser","Hustle"],
+ // Customer & selling
+ ["Every sale has five basic obstacles: no need, no money, no hurry, no desire, no trust.","Zig Ziglar","The craft"],
+ ["Approach each customer with the idea of helping them solve a problem or achieve a goal — not of selling a product.","Brian Tracy","The craft"],
+ ["People don't buy what you do; they buy why you do it.","Simon Sinek","The craft"],
+ ["Make a customer, not a sale.","Katherine Barchetti","Customers"],
+ ["If you're not taking care of your customer, your competitor will.","Bob Hooey","Customers"],
+ ["Your most unhappy customers are your greatest source of learning.","Bill Gates","Customers"],
+ ["Quality is not what you put into it. It is what the customer gets out of it.","Peter Drucker","Customers"],
+ ["Ninety percent of selling is conviction and ten percent is persuasion.","Shiv Khera","Conviction"],
+ // Original — the showroom floor
+ ["The customer who walked out today is still deciding. Be the name they remember tonight.",GB,"Follow-up"],
+ ["Every 'no' is a customer telling you what to fix. Listen harder, not louder.",GB,"Rejection"],
+ ["Somewhere in Perak, a family is about to buy their first EV. Make sure it's from you.",GB,"Purpose"],
+ ["You're not selling a car. You're handing someone the keys to the next chapter of their life.",GB,"Purpose"],
+ ["Fortune is in the follow-up. The fifth call closes what the first call opened.",GB,"Follow-up"],
+ ["Nobody remembers the spec sheet. They remember how you made them feel on the test drive.",GB,"Test drive"],
+ ["Your pipeline today is your pay cheque next month. Feed it.",GB,"Pipeline"],
+ ["Champions don't wait for walk-ins. They make the call before the coffee gets cold.",GB,"Hustle"],
+ ["One more call. One more follow-up. One more smile. That's the whole secret.",GB,"Grit"],
+ ["A slow month is just a story you haven't finished writing yet.",GB,"Resilience"],
+ ["Trust is built in the small promises you keep — the callback, the quote on time, the honest answer.",GB,"Trust"],
+ ["The best closers ask the best questions. Talk less, discover more.",GB,"The craft"],
+ ["Handle the objection with curiosity, not defence. 'Tell me more' opens doors.",GB,"Objections"],
+ ["Every happy owner is a billboard on the North–South Highway. Deliver like it.",GB,"Delivery"],
+ ["The handover is the beginning, not the end. Ambassadors are made after the sale.",GB,"Referrals"],
+ ["Your family is the reason. Today's effort is the proof.",GB,"Purpose"],
+ ["Rejection isn't personal. Quitting is.",GB,"Resilience"],
+ ["Someone who said 'just looking' last week is ready this week. Did you call?",GB,"Follow-up"],
+ ["Know the product cold, so you can give the customer your full warmth.",GB,"Product"],
+ ["Top performers aren't luckier. They just log every lead and chase every one.",GB,"Discipline"],
+ ["Win the morning, own the month.",GB,"Discipline"],
+ ["The customer can find the price online. They come to you for confidence.",GB,"Value"],
+ ["Don't sell the discount. Sell the difference.",GB,"Value"],
+ ["Be the consultant you'd want if your own mother were buying.",GB,"Trust"],
+ ["Energy is contagious. Walk onto the floor like the best is about to happen — because it is.",GB,"Energy"],
+ ["The target isn't pressure. It's proof of how many people you'll help this month.",GB,"Targets"],
+ ["Small wins, stacked daily, become the month nobody else saw coming.",GB,"Momentum"],
+ ["Every top seller was once a beginner who refused to stop.",GB,"Grit"]
+];
+(function(){
+  const p = new URLSearchParams(location.search);
+  if ((p.get("outlet")||"").toLowerCase()==="ipoh") document.body.classList.add("ipoh");
+  if (p.get("color")) document.documentElement.style.setProperty("--accent","#"+p.get("color").replace(/[^0-9a-f]/gi,""));
+  const KEY="gbq_bag";
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+  function save(b){try{localStorage.setItem(KEY,JSON.stringify(b))}catch(e){}}
+  // Shuffle-bag: every quote shows once before any repeats
+  function next(){
+    let bag=load().filter(i=>i<Q.length);
+    if(!bag.length){bag=[...Q.keys()];for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]]}}
+    const i=bag.pop();save(bag);return Q[i];
+  }
+  const card=document.getElementById("card");
+  function show(){
+    const [q,a,t]=next();
+    card.classList.remove("show");
+    setTimeout(()=>{
+      document.getElementById("q").textContent="“"+q+"”";
+      document.getElementById("a").textContent="— "+a;
+      document.getElementById("tag").textContent="Today's fuel · "+t;
+      card.classList.add("show");
+    },card.dataset.ready?250:0);
+    card.dataset.ready=1;
+  }
+  card.addEventListener("click",show);
+  card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show()}});
+  show();
+})();
+</script>
+</body>
+</html>
